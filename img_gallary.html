@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02.문서객체조작 매서드를 활용한 이미지 슬라이드</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    ul,li {list-style: none;}
+    a {text-decoration: none; color: #333;}
+    .gallery {
+      width: 534px; height: 425px;
+      border: 3px solid #000;
+      margin: 0 auto;
+      position: relative;
+    }
+    .gallery * {
+      margin: 0; padding: 0;
+    }
+    .gallery ul {display: flex;}
+    .gallery ul li {
+      width: 25%; height: 85px;
+      overflow: hidden;
+    }
+    .gallery ul img {
+      width: 100%; 
+      transition: 0.3s;
+    }
+    .gallery ul img:hover {
+      filter: brightness(1.1);
+      transform: scale(1.1)
+    }
+    .gallery i.fas {
+      position: absolute;
+      font-size: 30px;
+      color: #fff;
+      padding: 5px 8px;
+      background: rgba(0,0,0,0.7);
+      top: 57%;
+      cursor: pointer;
+    }
+    .gallery i.fa-angle-left {left: 0;}
+    .gallery i.fa-angle-right {right: 0;}
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+
+      //1. 변수 선언하기
+
+      //let gnb = $('.gallery ul li img');
+      let gnb = $('.gallery ul li');
+
+      let n = 1;
+      let l_btn = $('i.fa-angle-left');
+      let r_btn = $('i.fa-angle-right');
+
+      //2. 썸네일(gnb) 이미지에 마우스 클릭 시 href속성값을 변수에 담는다.(출력해본다.)
+
+      gnb.click(function(){
+          //let src = $(this).attr('src');
+          n = $(this).index()+1;
+          //console.log(src);
+          console.log(gnb);
+
+          $('.big_img img').attr('src','./images/0'+n+'.jpg').css('opacity','0').animate({'opacity':'1'},500);
+          return false;
+      });
+
+      function moveLeft() {
+        if(n==1){
+          n=4;
+        }else{
+          n--;
+        }
+        $('.big_img img').attr('src','./images/0'+n+'.jpg').css('opacity','0').animate({'opacity':'1'},500);
+      }
+
+      function moveRight(){
+      if(n==4){
+        n=1;
+      }else{
+        n++;
+      }
+      $('.big_img img').attr('src','./images/0'+n+'.jpg').css('opacity','0').animate({'opacity':'1'},500);
+    }
+
+    l_btn.click(function(){
+      moveLeft();
+    });
+
+    r_btn.click(function(){
+      moveRight();
+    });
+
+  });
+  </script>
+</head>
+<body>
+  <h2>02.문서객체조작 매서드를 활용한 이미지 슬라이드</h2>
+  <p>갤러리 박스 안에 목록태그를 작성하여 4장의 메뉴 이미지를 삽입하고, 목록태그 아래 배너박스를 만들어서 큰 사진이 나오도록 한다.</p>
+  <p>4장의 썸네일 이미지를 클릭 시 attr속성값을 변수에 담아 큰사진의 이미지 경로에 대입하여 변경하도록 한다.</p>
+  <p>좌, 우 버튼을 만들고 클릭 시 해당하는 배너이미지가 순차적으로 변경될 수 있도록 함수를 작성하여 구현한다. 이때 주의할 점은 섬네일 이미지 클릭 한 이미지와 좌, 우 버튼 클릭 시 순서가 일치되도록 해야한다.</p>
+
+  <article class="gallery">
+    <ul>
+      <li><a href="#"><img src="./images/01.jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/02.jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/03.jpg" alt=""></a></li>
+      <li><a href="#"><img src="./images/04.jpg" alt=""></a></li>
+    </ul>
+    <div class="big_img">
+      <img src="./images/01.jpg" alt="">
+    </div>
+    <i class="fas fa-angle-left"></i>
+    <i class="fas fa-angle-right"></i>
+  </article>
+</body>
+</html>
